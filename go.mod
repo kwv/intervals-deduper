@@ -1,4 +1,4 @@
-module intervals-deduper-HE
+module intervals-deduper
 
 go 1.25.0
 

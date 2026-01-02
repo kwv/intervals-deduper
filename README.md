@@ -1,4 +1,4 @@
-# Intervals De-Duper (Heuristic Edition)
+# Intervals De-Duper
 
 A sophisticated de-duplication tool for [Intervals.icu](https://intervals.icu) that evaluates the quality of duplicate activities to determine which one to keep.
 
@@ -17,21 +17,36 @@ This project is a Go rewrite of the original [intervals-dedupe](https://github.c
 
 ## Usage
 
-1. Initialize your configuration:
-   ```bash
-   cp config.example.yml config.yml
-   ```
-2. Run the de-duper:
-   ```bash
-   go run . --dry-run
-   ```
+The easiest way to use the de-duper is via **Docker** or by downloading a **pre-compiled binary** from the [Releases](https://github.com/kwv/intervals-deduper/releases) page.
 
-### Docker (Rootless & Distroless)
+1.  **Configure**: Create your `config.yml` from the example:
+    ```bash
+    cp config.example.yml config.yml
+    ```
+2.  **Run**: Choose one of the following methods:
 
-You can run the tool via Docker:
+### Method 1: Docker (Recommended)
+
+Use `-it` for interactive prompts:
 
 ```bash
-docker run -v $(pwd)/config.yml:/app/config.yml kwv4/intervals-deduper-HE --dry-run
+docker run -it -v $(pwd)/config.yml:/app/config.yml kwv4/intervals-deduper --interactive
+```
+
+### Method 2: Pre-compiled Binary
+
+1.  Download the latest release for your OS (Windows, macOS, or Linux).
+2.  Run the executable:
+    ```bash
+    ./intervals-deduper --dry-run
+    ```
+
+### Method 3: From Source (Development)
+
+If you have Go installed:
+
+```bash
+go run . --dry-run
 ```
 
 ### CLI Arguments

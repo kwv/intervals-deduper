@@ -1,5 +1,5 @@
 # Binaries
-intervals-deduper-HE
+intervals-deduper
 *.exe
 *.exe~
 *.dll

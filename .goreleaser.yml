@@ -1,4 +1,4 @@
-# .goreleaser.yml for intervals-deduper-HE
+# .goreleaser.yml for intervals-deduper
 version: 2
 
 before:
@@ -6,7 +6,7 @@ before:
     - go mod tidy
 
 builds:
-  - id: intervals-deduper-HE
+  - id: intervals-deduper
     env:
       - CGO_ENABLED=0
     goos:
@@ -18,12 +18,12 @@ builds:
       - arm64
     ldflags:
       - -s -w -X main.Version={{.Version}}
-    binary: intervals-deduper-HE
+    binary: intervals-deduper
 
 dockers_v2:
-  - id: intervals-deduper-HE
+  - id: intervals-deduper
     images:
-      - "kwv4/intervals-deduper-HE"
+      - "kwv4/intervals-deduper"
     tags:
       - "{{ .Version }}"
       - "latest"

@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NAMESPACE: kwv4
-      REPO: intervals-deduper-HE
+      REPO: intervals-deduper
       KEEP_RECENT: '5'
       OLDER_THAN_DAYS: '30'
       PROTECTED_REGEX: '^(latest|stable|dev)$'
