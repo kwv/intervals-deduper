@@ -3,8 +3,12 @@ package main
 import (
 	"fmt"
 	"math"
+	"regexp"
 	"strings"
 )
+
+var whitespaceRegex = regexp.MustCompile(`\s+`)
+var genericTimeKeywords = []string{"morning", "afternoon", "evening", "night", "lunch"}
 
 type ScoringEngine struct {
 	Config *Config
@@ -24,20 +28,23 @@ func (s *ScoringEngine) IsGenericName(name string, activityType string) bool {
 	trimmed := strings.ToLower(strings.TrimSpace(name))
 	lowType := strings.ToLower(activityType)
 
-	// Direct match to type (e.g., "Cycling", "Run")
-	if trimmed == lowType || trimmed == "cycling" || trimmed == "ride" || trimmed == "workout" {
+	// Strip all whitespace for robust matching (e.g., "Virtual Ride" -> "virtualride")
+	strippedName := whitespaceRegex.ReplaceAllString(trimmed, "")
+	strippedType := whitespaceRegex.ReplaceAllString(lowType, "")
+
+	// Direct match to type (e.g., "Cycling", "Run", "VirtualRide")
+	if strippedName == strippedType || strippedName == "cycling" || strippedName == "ride" || strippedName == "workout" {
 		return true
 	}
 
-	// Pattern match: "{Time} {Type}"
-	times := []string{"morning", "afternoon", "evening", "night", "lunch"}
-	for _, t := range times {
-		// e.g., "morning ride", "lunch walk"
-		if trimmed == t+" "+lowType {
+	// Pattern match: "{Time}{Type}" (whitespace stripped)
+	for _, t := range genericTimeKeywords {
+		// e.g., "morningride", "lunchwalk", "morningvirtualride"
+		if strippedName == t+strippedType {
 			return true
 		}
 		// Also catch common generic mappings (e.g. Type=VirtualRide but name="Morning Ride")
-		if trimmed == t+" ride" || trimmed == t+" workout" {
+		if strippedName == t+"ride" || strippedName == t+"workout" {
 			return true
 		}
 	}
@@ -66,9 +73,8 @@ func (s *ScoringEngine) RankCandidateNames(names []string, activityType string) 
 
 		// Penalty for starts with "Morning", "Afternoon" etc if it's just two words
 		// (e.g. "Morning Ride" is generic, but "Morning GravelRide" is slightly less so)
-		keywords := []string{"morning", "afternoon", "evening", "night", "lunch"}
 		lower := strings.ToLower(name)
-		for _, k := range keywords {
+		for _, k := range genericTimeKeywords {
 			if strings.HasPrefix(lower, k) {
 				score -= 10.0
 				break
