@@ -14,6 +14,7 @@ func TestIsGenericName(t *testing.T) {
 	}{
 		{"Morning Ride", "Cycling", true},
 		{"Morning VirtualRide", "VirtualRide", true},
+		{"Morning Virtual Ride", "VirtualRide", true},
 		{"Lunch Walk", "Walk", true},
 		{"Afternoon Rowing", "Rowing", true},
 		{"Evening Hike", "Hike", true},
