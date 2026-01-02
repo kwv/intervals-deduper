@@ -1,0 +1,39 @@
+# Intervals De-Duper (HE) Configuration
+
+# API Credentials (or use ENV vars: INTERVALS_API_KEY, INTERVALS_ATHLETE_ID)
+api_key: "your_api_key"
+athlete_id: "your_athlete_id"
+
+# Weights for Heuristic Scoring
+# Higher numbers mean the metric is more important
+weights:
+  gps: 12
+  heartrate: 5
+  power: 10
+  cadence: 2
+  sampling_rate: 5 # Prioritizes higher frequency (e.g. 1s vs smart recording)
+  rpe: 5           # Bonus for presence of RPE/Feel (user interaction)
+  manual: 5        # Bonus for custom notes/description
+  custom_name: 2   # Bonus for non-generic names
+
+# Device Hierarchy
+# The tool will look for these substrings in the 'device_name' or 'source' fields.
+# Earlier items in the list get a higher bonus.
+device_priority:
+  - "Wahoo"
+  - "MyWhoosh"
+  - "Coros Pace"
+
+# Penalize activities from specific sync tools (e.g., RunGap, HealthFit)
+# TIP: Use --verbose to see the exact 'Source' or 'OAuthClientName' for your activities.
+uploader_penalties:
+  RunGap: 4
+
+
+# Filters
+# Only consider activities with these names or types (optional)
+# name_pattern: ".*"
+# activity_types: ["Ride", "VirtualRide"]
+
+# Default Search Range (if not specified via flags)
+days_to_sync: 30
