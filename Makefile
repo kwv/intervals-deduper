@@ -1,5 +1,5 @@
 DOCKERHUB_USER ?= kwv4
-IMAGE_NAME ?= intervals-deduper-HE
+IMAGE_NAME ?= intervals-deduper
 # VERSION is the strict, exact tag for releases
 VERSION ?= $(shell git describe --tags --exact-match 2>/dev/null | sed 's/^v//' || git tag -l 'v*' | sort -V | tail -n1 | sed 's/^v//')
 

@@ -27,7 +27,7 @@ func main() {
 	flag.Parse()
 
 	if *versionFlag {
-		fmt.Printf("intervals-deduper-HE version %s\n", Version)
+		fmt.Printf("intervals-deduper version %s\n", Version)
 		return
 	}
 
