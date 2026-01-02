@@ -1,0 +1,19 @@
+# Binaries
+intervals-deduper-HE
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Configuration
+config.yml
+
+# Data Dumps & Samples
+*.json
+
+# Tooling
+.DS_Store
+.idea/
+.vscode/
+*.out

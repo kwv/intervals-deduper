@@ -1,0 +1,52 @@
+# .goreleaser.yml for intervals-deduper-HE
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: intervals-deduper-HE
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.Version={{.Version}}
+    binary: intervals-deduper-HE
+
+dockers_v2:
+  - id: intervals-deduper-HE
+    image_templates:
+      - "kwv4/intervals-deduper-HE:{{ .Version }}"
+      - "kwv4/intervals-deduper-HE:latest"
+    dockerfile: Dockerfile
+    labels:
+      org.opencontainers.image.version: "{{ .Version }}"
+    platforms:
+      - linux/amd64
+      - linux/arm64
+
+archives:
+  - formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
