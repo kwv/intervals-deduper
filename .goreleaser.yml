@@ -22,9 +22,11 @@ builds:
 
 dockers_v2:
   - id: intervals-deduper-HE
-    image_templates:
-      - "kwv4/intervals-deduper-HE:{{ .Version }}"
-      - "kwv4/intervals-deduper-HE:latest"
+    images:
+      - "kwv4/intervals-deduper-HE"
+    tags:
+      - "{{ .Version }}"
+      - "latest"
     dockerfile: Dockerfile
     labels:
       org.opencontainers.image.version: "{{ .Version }}"
